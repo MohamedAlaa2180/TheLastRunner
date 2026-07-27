@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Genesis.Core.Events;
@@ -20,6 +21,10 @@ public class PlayerMovement : MonoBehaviour
     float coyoteTimer;
     bool wasGrounded;
 
+    IDisposable pauseSub;
+    IDisposable resumeSub;
+    IDisposable gameOverSub;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -33,6 +38,10 @@ public class PlayerMovement : MonoBehaviour
         controls.Player.Jump.performed += OnJump;
         controls.Player.Slide.performed += OnSlide;
         controls.Player.Enable();
+
+        pauseSub = eventBus.Subscribe<GamePausedEvent>(_ => controls.Player.Disable());
+        resumeSub = eventBus.Subscribe<GameResumedEvent>(_ => controls.Player.Enable());
+        gameOverSub = eventBus.Subscribe<GameOverEvent>(_ => controls.Player.Disable());
     }
 
     void OnDisable()
@@ -42,6 +51,10 @@ public class PlayerMovement : MonoBehaviour
         controls.Player.SwitchLaneRight.performed -= OnSwitchLaneRight;
         controls.Player.Jump.performed -= OnJump;
         controls.Player.Slide.performed -= OnSlide;
+
+        pauseSub?.Dispose();
+        resumeSub?.Dispose();
+        gameOverSub?.Dispose();
     }
 
     void OnSwitchLaneLeft(InputAction.CallbackContext context) => laneIndex = Mathf.Clamp(laneIndex - 1, 0, 2);
