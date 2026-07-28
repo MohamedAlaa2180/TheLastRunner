@@ -9,6 +9,8 @@ public class EndlessEnvironmentSpawner : MonoBehaviour
     [SerializeField] float speed = 8f;
     [SerializeField] float recycleOffset = 20f;
 
+    public float Speed => speed;
+
     readonly Queue<EnvironmentSegment> pool = new();
     readonly List<EnvironmentSegment> active = new();
 

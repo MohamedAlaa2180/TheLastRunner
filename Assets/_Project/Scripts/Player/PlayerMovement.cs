@@ -14,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float coyoteTime = 0.15f;
     int laneIndex = 1;
 
+    public float LaneSpacing => laneSpacing;
+
     [Inject] IEventBus eventBus;
 
     Rigidbody rb;
