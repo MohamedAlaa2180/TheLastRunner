@@ -49,4 +49,28 @@ namespace Genesis.Core.Events
 
         double IEvent.Timestamp => Timestamp;
     }
+
+    public readonly struct StartGameRequestedEvent : IEvent
+    {
+        public readonly double Timestamp;
+
+        public StartGameRequestedEvent(double timestamp = 0)
+        {
+            Timestamp = timestamp == 0 ? Time.timeAsDouble : timestamp;
+        }
+
+        double IEvent.Timestamp => Timestamp;
+    }
+
+    public readonly struct ResumeGameRequestedEvent : IEvent
+    {
+        public readonly double Timestamp;
+
+        public ResumeGameRequestedEvent(double timestamp = 0)
+        {
+            Timestamp = timestamp == 0 ? Time.timeAsDouble : timestamp;
+        }
+
+        double IEvent.Timestamp => Timestamp;
+    }
 }

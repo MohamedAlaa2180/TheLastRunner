@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     float coyoteTimer;
     bool wasGrounded;
 
+    IDisposable startedSub;
     IDisposable pauseSub;
     IDisposable resumeSub;
     IDisposable gameOverSub;
@@ -37,8 +38,9 @@ public class PlayerMovement : MonoBehaviour
         controls.Player.SwitchLaneRight.performed += OnSwitchLaneRight;
         controls.Player.Jump.performed += OnJump;
         controls.Player.Slide.performed += OnSlide;
-        controls.Player.Enable();
+        controls.Player.Disable();
 
+        startedSub = eventBus.Subscribe<GameStartedEvent>(_ => controls.Player.Enable());
         pauseSub = eventBus.Subscribe<GamePausedEvent>(_ => controls.Player.Disable());
         resumeSub = eventBus.Subscribe<GameResumedEvent>(_ => controls.Player.Enable());
         gameOverSub = eventBus.Subscribe<GameOverEvent>(_ => controls.Player.Disable());
@@ -52,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
         controls.Player.Jump.performed -= OnJump;
         controls.Player.Slide.performed -= OnSlide;
 
+        startedSub?.Dispose();
         pauseSub?.Dispose();
         resumeSub?.Dispose();
         gameOverSub?.Dispose();

@@ -1,3 +1,4 @@
+using System;
 using Genesis.Core.Events;
 using Reflex.Attributes;
 using UnityEngine;
@@ -9,21 +10,37 @@ public class GameStateMachine : MonoBehaviour
 
     public IState CurrentState { get; private set; }
 
+    GameMenuState menuState;
     GamePlayingState playingState;
     GamePausedState pausedState;
     GameOverState gameOverState;
 
+    IDisposable startRequestedSub;
+    IDisposable resumeRequestedSub;
+
     void Awake()
     {
+        menuState = new GameMenuState();
         playingState = new GamePlayingState(this);
         pausedState = new GamePausedState(this);
         gameOverState = new GameOverState();
     }
 
+    void OnEnable()
+    {
+        startRequestedSub = eventBus.Subscribe<StartGameRequestedEvent>(_ => StartGame());
+        resumeRequestedSub = eventBus.Subscribe<ResumeGameRequestedEvent>(_ => Resume());
+    }
+
+    void OnDisable()
+    {
+        startRequestedSub?.Dispose();
+        resumeRequestedSub?.Dispose();
+    }
+
     void Start()
     {
-        ChangeState(playingState);
-        eventBus.Publish(new GameStartedEvent());
+        ChangeState(menuState);
     }
 
     void Update() => CurrentState?.Update();
@@ -33,6 +50,13 @@ public class GameStateMachine : MonoBehaviour
         CurrentState?.Exit();
         CurrentState = newState;
         CurrentState.Enter();
+    }
+
+    public void StartGame()
+    {
+        if (CurrentState != menuState) return;
+        ChangeState(playingState);
+        eventBus.Publish(new GameStartedEvent());
     }
 
     public void Pause()
