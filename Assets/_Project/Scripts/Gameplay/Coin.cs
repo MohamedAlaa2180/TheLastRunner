@@ -17,6 +17,7 @@ public class Coin : MonoBehaviour
 
     void OnEnable()
     {
+        transform.localRotation = Quaternion.identity;
         rotationTween = transform
             .DOLocalRotate(new Vector3(0f, 360f, 0f), rotationDuration, RotateMode.FastBeyond360)
             .SetEase(Ease.Linear)
