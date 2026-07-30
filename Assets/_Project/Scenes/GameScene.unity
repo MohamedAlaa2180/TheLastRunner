@@ -491,8 +491,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 301.8}
-  m_SizeDelta: {x: 1083.4172, y: 603.609}
+  m_AnchoredPosition: {x: 0, y: 205}
+  m_SizeDelta: {x: 1280, y: 310}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &244862383
 MonoBehaviour:
@@ -646,8 +646,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -235.16235, y: -218.69824}
-  m_SizeDelta: {x: 352.8618, y: 86.4903}
+  m_AnchoredPosition: {x: -186.5, y: -200.65}
+  m_SizeDelta: {x: 260.4137, y: 86.4903}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &312921984
 MonoBehaviour:
@@ -6489,7 +6489,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 120.3647, y: 120.3647}
+  m_SizeDelta: {x: 85, y: 85}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &970661563
 MonoBehaviour:
@@ -6564,7 +6564,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 120.3647, y: 120.3647}
+  m_SizeDelta: {x: 85, y: 85}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1005968739
 MonoBehaviour:
@@ -6641,7 +6641,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 107}
-  m_SizeDelta: {x: 401.1108, y: 155.509}
+  m_SizeDelta: {x: 290, y: 115}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1013916389
 MonoBehaviour:
@@ -6762,7 +6762,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 1280, y: 720}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1035894894
 GameObject:
@@ -6848,7 +6848,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 120.3647, y: 120.3647}
+  m_SizeDelta: {x: 85, y: 85}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1148954375
 MonoBehaviour:
@@ -6972,8 +6972,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 82.6
-  m_fontSizeBase: 82.6
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -7425,8 +7425,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 82.6
-  m_fontSizeBase: 82.6
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -7562,10 +7562,10 @@ RectTransform:
   - {fileID: 8244184501722546029}
   m_Father: {fileID: 750771425}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 1280, y: 720}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1551735295
 MonoBehaviour:
@@ -8002,8 +8002,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -149}
-  m_SizeDelta: {x: 401.1108, y: 155.509}
+  m_AnchoredPosition: {x: 0, y: -95}
+  m_SizeDelta: {x: 290, y: 115}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1946078277
 MonoBehaviour:
@@ -9196,8 +9196,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 82.6
-  m_fontSizeBase: 82.6
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -9303,8 +9303,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -149}
-  m_SizeDelta: {x: 401.1108, y: 155.509}
+  m_AnchoredPosition: {x: 0.0000038147, y: 0.000011444}
+  m_SizeDelta: {x: 287.6528, y: 111.52}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8244184501722546030
 MonoBehaviour:
