@@ -14,6 +14,10 @@ public class AudioManager : MonoBehaviour, IAudioService
 
     [Header("SFX Pool")]
     [SerializeField] int sfxPoolSize = 8;
+    [SerializeField] float sfxVolume = 0.5f;
+
+    [Header("Music")]
+    [SerializeField] AudioClip musicClip;
 
     [Header("Coin Combo")]
     [SerializeField] AudioClip coinClip;
@@ -44,6 +48,15 @@ public class AudioManager : MonoBehaviour, IAudioService
         musicSource = gameObject.AddComponent<AudioSource>();
         musicSource.outputAudioMixerGroup = musicGroup;
         musicSource.playOnAwake = false;
+        musicSource.spatialBlend = 0f;
+        musicSource.loop = true;
+    }
+
+    void Start()
+    {
+        SetSfxVolume(sfxVolume);
+        if (musicClip != null)
+            PlayMusic(musicClip);
     }
 
     void OnEnable() => coinSub = eventBus.Subscribe<CoinCollectedEvent>(OnCoinCollected);
