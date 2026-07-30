@@ -62,11 +62,73 @@ namespace Genesis.Core.Events
         double IEvent.Timestamp => Timestamp;
     }
 
+    public readonly struct CountdownStartedEvent : IEvent
+    {
+        public readonly double Timestamp;
+
+        public CountdownStartedEvent(double timestamp = 0)
+        {
+            Timestamp = timestamp == 0 ? Time.timeAsDouble : timestamp;
+        }
+
+        double IEvent.Timestamp => Timestamp;
+    }
+
+    public readonly struct CountdownTickEvent : IEvent
+    {
+        public readonly int Value;
+        public readonly double Timestamp;
+
+        public CountdownTickEvent(int value, double timestamp = 0)
+        {
+            Value = value;
+            Timestamp = timestamp == 0 ? Time.timeAsDouble : timestamp;
+        }
+
+        double IEvent.Timestamp => Timestamp;
+    }
+
     public readonly struct ResumeGameRequestedEvent : IEvent
     {
         public readonly double Timestamp;
 
         public ResumeGameRequestedEvent(double timestamp = 0)
+        {
+            Timestamp = timestamp == 0 ? Time.timeAsDouble : timestamp;
+        }
+
+        double IEvent.Timestamp => Timestamp;
+    }
+
+    public readonly struct GameHitEvent : IEvent
+    {
+        public readonly double Timestamp;
+
+        public GameHitEvent(double timestamp = 0)
+        {
+            Timestamp = timestamp == 0 ? Time.timeAsDouble : timestamp;
+        }
+
+        double IEvent.Timestamp => Timestamp;
+    }
+
+    public readonly struct ContinueRequestedEvent : IEvent
+    {
+        public readonly double Timestamp;
+
+        public ContinueRequestedEvent(double timestamp = 0)
+        {
+            Timestamp = timestamp == 0 ? Time.timeAsDouble : timestamp;
+        }
+
+        double IEvent.Timestamp => Timestamp;
+    }
+
+    public readonly struct RestartRequestedEvent : IEvent
+    {
+        public readonly double Timestamp;
+
+        public RestartRequestedEvent(double timestamp = 0)
         {
             Timestamp = timestamp == 0 ? Time.timeAsDouble : timestamp;
         }

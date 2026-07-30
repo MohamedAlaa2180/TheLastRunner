@@ -1,5 +1,7 @@
 public enum UIScreenId
 {
     Start,
-    Pause
+    Pause,
+    Countdown,
+    Collision
 }

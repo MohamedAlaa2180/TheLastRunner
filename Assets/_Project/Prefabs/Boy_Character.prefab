@@ -1919,6 +1919,8 @@ GameObject:
   - component: {fileID: 406662869680644308}
   - component: {fileID: 8844658766275019465}
   - component: {fileID: 4923876501738294061}
+  - component: {fileID: 4923876501738294062}
+  - component: {fileID: 4923876501738294063}
   m_Layer: 0
   m_Name: Boy_Character
   m_TagString: Untagged
@@ -2033,6 +2035,9 @@ MonoBehaviour:
   jumpForce: 6
   groundCheck: {fileID: 7207335653666637610}
   coyoteTime: 0.15
+  capsuleCollider: {fileID: 105613167277558213}
+  slideDuration: 0.8
+  slideHeight: 1.6
   laneIndex: 1
 --- !u!114 &4923876501738294061
 MonoBehaviour:
@@ -2046,6 +2051,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b95e3f7a1c8d4062a9f3e8b1d6c40795, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimation
+--- !u!114 &4923876501738294062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7856172432834074049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9518c2f27ca5495eb77d6e610454a960, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerObstacleCollision
+  invulnerabilityDuration: 1.5
+--- !u!114 &4923876501738294063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7856172432834074049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 797bd177bee34f2f9e16e3eb2e7ed277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerLives
+  maxLives: 3
 --- !u!1 &8157620673654107084
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,6 +8,8 @@ public class UIManager : MonoBehaviour, IUIService
 {
     [SerializeField] StartScreen startScreen;
     [SerializeField] PauseMenuScreen pauseMenuScreen;
+    [SerializeField] CountdownScreen countdownScreen;
+    [SerializeField] CollisionScreen collisionScreen;
 
     [Inject] IEventBus eventBus;
 
@@ -15,11 +17,17 @@ public class UIManager : MonoBehaviour, IUIService
     IDisposable pausedSub;
     IDisposable resumedSub;
     IDisposable startedSub;
+    IDisposable countdownStartedSub;
+    IDisposable countdownTickSub;
+    IDisposable hitSub;
+    IDisposable livesChangedSub;
 
     void Awake()
     {
         Register(startScreen);
         Register(pauseMenuScreen);
+        Register(countdownScreen);
+        Register(collisionScreen);
     }
 
     void OnEnable()
@@ -28,10 +36,28 @@ public class UIManager : MonoBehaviour, IUIService
             startScreen.StartClicked += OnStartClicked;
         if (pauseMenuScreen != null)
             pauseMenuScreen.ResumeClicked += OnResumeClicked;
+        if (collisionScreen != null)
+        {
+            collisionScreen.RestartClicked += OnRestartClicked;
+            collisionScreen.UseLifeClicked += OnUseLifeClicked;
+        }
 
         pausedSub = eventBus.Subscribe<GamePausedEvent>(_ => Show(UIScreenId.Pause));
-        resumedSub = eventBus.Subscribe<GameResumedEvent>(_ => Hide(UIScreenId.Pause));
-        startedSub = eventBus.Subscribe<GameStartedEvent>(_ => Hide(UIScreenId.Start));
+        resumedSub = eventBus.Subscribe<GameResumedEvent>(_ =>
+        {
+            Hide(UIScreenId.Pause);
+            Hide(UIScreenId.Countdown);
+        });
+        startedSub = eventBus.Subscribe<GameStartedEvent>(_ => Hide(UIScreenId.Countdown));
+        countdownStartedSub = eventBus.Subscribe<CountdownStartedEvent>(_ =>
+        {
+            Hide(UIScreenId.Start);
+            Hide(UIScreenId.Collision);
+            Show(UIScreenId.Countdown);
+        });
+        countdownTickSub = eventBus.Subscribe<CountdownTickEvent>(evt => countdownScreen?.SetValue(evt.Value));
+        hitSub = eventBus.Subscribe<GameHitEvent>(_ => Show(UIScreenId.Collision));
+        livesChangedSub = eventBus.Subscribe<LivesChangedEvent>(evt => collisionScreen?.SetLivesAvailable(evt.Lives > 0));
     }
 
     void Start()
@@ -46,10 +72,19 @@ public class UIManager : MonoBehaviour, IUIService
             startScreen.StartClicked -= OnStartClicked;
         if (pauseMenuScreen != null)
             pauseMenuScreen.ResumeClicked -= OnResumeClicked;
+        if (collisionScreen != null)
+        {
+            collisionScreen.RestartClicked -= OnRestartClicked;
+            collisionScreen.UseLifeClicked -= OnUseLifeClicked;
+        }
 
         pausedSub?.Dispose();
         resumedSub?.Dispose();
         startedSub?.Dispose();
+        countdownStartedSub?.Dispose();
+        countdownTickSub?.Dispose();
+        hitSub?.Dispose();
+        livesChangedSub?.Dispose();
     }
 
     public void Show(UIScreenId id)
@@ -82,4 +117,8 @@ public class UIManager : MonoBehaviour, IUIService
     void OnStartClicked() => eventBus.Publish(new StartGameRequestedEvent());
 
     void OnResumeClicked() => eventBus.Publish(new ResumeGameRequestedEvent());
+
+    void OnRestartClicked() => eventBus.Publish(new RestartRequestedEvent());
+
+    void OnUseLifeClicked() => eventBus.Publish(new ContinueRequestedEvent());
 }

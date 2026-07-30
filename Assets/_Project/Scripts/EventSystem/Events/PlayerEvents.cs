@@ -39,4 +39,16 @@ namespace Genesis.Core.Events
 
         double IEvent.Timestamp => Timestamp;
     }
+
+    public readonly struct PlayerHitObstacleEvent : IEvent
+    {
+        public readonly double Timestamp;
+
+        public PlayerHitObstacleEvent(double timestamp = 0)
+        {
+            Timestamp = timestamp == 0 ? Time.timeAsDouble : timestamp;
+        }
+
+        double IEvent.Timestamp => Timestamp;
+    }
 }

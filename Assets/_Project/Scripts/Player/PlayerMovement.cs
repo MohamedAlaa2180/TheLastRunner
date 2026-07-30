@@ -12,6 +12,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpForce = 6f;
     [SerializeField] GroundCheck groundCheck;
     [SerializeField] float coyoteTime = 0.15f;
+    [SerializeField] CapsuleCollider capsuleCollider;
+    [SerializeField] float slideDuration = 0.8f;
+    [SerializeField] float slideHeight = 1.6f;
     int laneIndex = 1;
 
     public float LaneSpacing => laneSpacing;
@@ -23,15 +26,23 @@ public class PlayerMovement : MonoBehaviour
     float coyoteTimer;
     bool wasGrounded;
 
+    float standHeight;
+    Vector3 standCenter;
+    float slideTimer;
+    bool isSliding;
+
     IDisposable startedSub;
     IDisposable pauseSub;
     IDisposable resumeSub;
     IDisposable gameOverSub;
+    IDisposable hitSub;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
         controls = new InputSystem_Actions();
+        standHeight = capsuleCollider.height;
+        standCenter = capsuleCollider.center;
     }
 
     void OnEnable()
@@ -46,6 +57,7 @@ public class PlayerMovement : MonoBehaviour
         pauseSub = eventBus.Subscribe<GamePausedEvent>(_ => controls.Player.Disable());
         resumeSub = eventBus.Subscribe<GameResumedEvent>(_ => controls.Player.Enable());
         gameOverSub = eventBus.Subscribe<GameOverEvent>(_ => controls.Player.Disable());
+        hitSub = eventBus.Subscribe<GameHitEvent>(_ => controls.Player.Disable());
     }
 
     void OnDisable()
@@ -60,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
         pauseSub?.Dispose();
         resumeSub?.Dispose();
         gameOverSub?.Dispose();
+        hitSub?.Dispose();
     }
 
     void OnSwitchLaneLeft(InputAction.CallbackContext context) => laneIndex = Mathf.Clamp(laneIndex - 1, 0, 2);
@@ -74,7 +87,19 @@ public class PlayerMovement : MonoBehaviour
         eventBus.Publish(new PlayerJumpedEvent());
     }
 
-    void OnSlide(InputAction.CallbackContext context) => eventBus.Publish(new PlayerSlidedEvent());
+    void OnSlide(InputAction.CallbackContext context)
+    {
+        if (isSliding || !groundCheck.IsGrounded) return;
+
+        isSliding = true;
+        slideTimer = slideDuration;
+
+        float bottom = standCenter.y - standHeight / 2f;
+        capsuleCollider.height = slideHeight;
+        capsuleCollider.center = new Vector3(standCenter.x, bottom + slideHeight / 2f, standCenter.z);
+
+        eventBus.Publish(new PlayerSlidedEvent());
+    }
 
     void FixedUpdate()
     {
@@ -85,6 +110,17 @@ public class PlayerMovement : MonoBehaviour
         {
             wasGrounded = grounded;
             eventBus.Publish(new PlayerGroundedChangedEvent(grounded));
+        }
+
+        if (isSliding)
+        {
+            slideTimer -= Time.fixedDeltaTime;
+            if (slideTimer <= 0f)
+            {
+                isSliding = false;
+                capsuleCollider.height = standHeight;
+                capsuleCollider.center = standCenter;
+            }
         }
 
         float targetX = (laneIndex - 1) * laneSpacing;
