@@ -30,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     Vector3 standCenter;
     float slideTimer;
     bool isSliding;
+    bool isJumping;
 
     IDisposable startedSub;
     IDisposable pauseSub;
@@ -83,13 +84,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if (coyoteTimer <= 0f) return;
         coyoteTimer = 0f;
+        isJumping = true;
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpForce, rb.linearVelocity.z);
         eventBus.Publish(new PlayerJumpedEvent());
     }
 
     void OnSlide(InputAction.CallbackContext context)
     {
-        if (isSliding || !groundCheck.IsGrounded) return;
+        if (isSliding || isJumping || !groundCheck.IsGrounded) return;
 
         isSliding = true;
         slideTimer = slideDuration;
@@ -105,6 +107,7 @@ public class PlayerMovement : MonoBehaviour
     {
         bool grounded = groundCheck.IsGrounded && rb.linearVelocity.y <= 0f;
         coyoteTimer = grounded ? coyoteTime : coyoteTimer - Time.fixedDeltaTime;
+        if (grounded) isJumping = false;
 
         if (grounded != wasGrounded)
         {
